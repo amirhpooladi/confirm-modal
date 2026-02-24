@@ -1,3 +1,4 @@
+# .gitignore
+.npmrc
 node_modules/
 dist/
-*.log

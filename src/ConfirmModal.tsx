@@ -26,57 +26,23 @@ function AnimatedButton({
   onClick: () => void;
   variant: "default" | "delete";
 }) {
-  const letters = label.split("");
-  const [isDropping, setIsDropping] = useState(false);
-  const [droppedCount, setDroppedCount] = useState(0);
-
-  const reset = useCallback(() => {
-    setIsDropping(false);
-    setDroppedCount(0);
-  }, []);
-
-  useEffect(() => {
-    if (isLoading && !isDropping) setIsDropping(true);
-    if (!isLoading && isDropping) reset();
-  }, [isLoading, isDropping, reset]);
-
-  useEffect(() => {
-    if (!isDropping) return;
-    if (droppedCount < letters.length) {
-      const t = setTimeout(() => setDroppedCount((c) => c + 1), 100);
-      return () => clearTimeout(t);
-    }
-  }, [isDropping, droppedCount, letters.length]);
-
-  const allDropped = isDropping && droppedCount >= letters.length;
-
   return (
     <button
       className={`cm-button ${variant === "delete" ? "cm-delete" : ""}`}
       onClick={onClick}
       disabled={isLoading}
     >
-      <span className="cm-button-content">
-        {letters.map((letter, i) => {
-          const gone = isDropping && i < droppedCount;
-          return (
-            <span
-              key={i}
-              style={{
-                transform: gone
-                  ? "translateY(20px) rotate(10deg) scale(0.3)"
-                  : "none",
-                opacity: gone ? 0 : 1,
-                transition: "all 0.2s ease",
-              }}
-            >
-              {letter}
-            </span>
-          );
-        })}
+      <span
+        className="cm-button-content"
+        style={{
+          opacity: isLoading ? 0 : 1,
+          transition: "opacity 0.2s ease",
+        }}
+      >
+        {label}
       </span>
 
-      {allDropped && <div className="cm-spinner" />}
+      {isLoading && <div className="cm-spinner" />}
     </button>
   );
 }
@@ -97,9 +63,18 @@ export function ConfirmModal({
   return (
     <div className="cm-overlay">
       <div className="cm-modal">
+        <button
+          className="cm-close"
+          onClick={onCancel}
+
+        >
+          ×
+        </button>
         <div className="cm-header">
-          <h3>{title}</h3>
-          {description && <p>{description}</p>}
+          <div className="cm-title">{title}</div>
+          {description && (
+            <div className="cm-description">{description}</div>
+          )}
         </div>
 
         <div className="cm-footer">

@@ -1,5 +1,5 @@
 {
- "name": "react-confirm-animated-dialog-dk",
+  "name": "react-confirm-animated-dialog-dk",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -18,5 +18,13 @@
     "@types/react-dom": "^19.2.3",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amirhpooladi/confirm-modal.git"
+  },
+  "homepage": "https://github.com/amirhpooladi/confirm-modal#readme",
+  "bugs": {
+    "url": "https://github.com/amirhpooladi/confirm-modal/issues"
   }
 }
